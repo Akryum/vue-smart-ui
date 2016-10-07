@@ -1,0 +1,157 @@
+@import '../styles/include';
+@import '../styles/md-colors';
+
+/* Material design theme */
+
+.theme-material {
+  
+  @mixin bg-color($bg, $color, $flat-color: $bg) {
+    background-color: $bg;
+    color: $color;
+    $bg-hover: darken($bg, 6%);
+  
+    &:hover {
+      background-color: $bg-hover;
+    }
+    
+    &:active {
+      background-color: darken($bg-hover, 10%);
+      
+      &.has-ripple {
+        background-color: $bg;
+      }
+    }
+    
+    &.flat {
+      background-color: transparent;
+      color: $flat-color;
+      $bg-hover: lighten($flat-color, 10%);
+      
+      &:hover {
+        color: $bg-hover;
+      }
+      
+      &:active {
+        background-color: rgba($bg-hover, 0.2);
+        color: darken($bg-hover, 10%);
+        
+        &.has-ripple {
+          color: $flat-color;
+        }
+      }
+    }
+  }
+  
+  a {
+    $color: $md-blue;
+    text-decoration: none;
+    color: $color;
+    
+    &:hover {
+      color: lighten($color, 20%);
+    }
+  }
+  
+  h1 {
+    padding: 0;
+    margin: 12px;
+    font-weight: normal;
+  }
+  
+  &, .s-component, input, textarea {
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell",
+    	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 12pt;
+  }
+
+  .s-button {
+    border: none;
+    border-radius: 2px;
+    padding: 12px;
+    height: 32px;
+    
+    .s-button-icon {
+      margin-bottom: 3px;
+    }
+  }
+
+  .s-action {
+    font-size: 14px;
+    text-transform: uppercase;
+    outline: none;
+    font-weight: 500;
+
+    @include bg-color($md-grey-300, black, black);
+
+    &.primary {
+      @include bg-color($md-blue, white);
+    }
+
+    &.special {
+      @include bg-color($md-purple-a400, white);
+    }
+
+    &.good {
+      @include bg-color($md-green, white);
+    }
+
+    &.bad {
+      @include bg-color($md-red, white);
+    }
+
+    &.warning {
+      @include bg-color($md-orange, white);
+    }
+  }
+  
+  .s-input {
+    border: none;
+  }
+
+  .s-text-input {
+    $focus-color: $md-blue;
+    
+    .s-input {
+      height: 32px;
+      box-sizing: border-box;
+      padding: 4px 0;
+    }
+    
+    .s-input-container {
+      position: relative;
+      margin: 4px;
+      border-bottom: solid 1px $md-grey-600;
+      
+      &:after {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        display: block;
+        bottom: -1px;
+        left: 50%;
+        right: 50%;
+        height: 2px;
+        background: $focus-color;
+        transition: left 0.15s, right 0.15s;
+      }
+    }
+    
+    .s-text-input-icon {
+      margin-top: 6px;
+      font-size: 26px !important;
+      transition: color 0.3s;
+    }
+
+    &.focus {
+      .s-input-container:after {
+        left: 0;
+        right: 0;
+      }
+      
+      .s-text-input-icon {
+        color: $focus-color;
+      }
+    }
+  }
+
+}

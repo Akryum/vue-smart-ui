@@ -1,23 +1,23 @@
-.ellipsis {
+@mixin ellipsis {
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.bounds(@distance) {
-  top: @distance;
-  bottom: @distance;
-  right: @distance;
-  left: @distance;
+@mixin bounds($distance) {
+  top: $distance;
+  bottom: $distance;
+  right: $distance;
+  left: $distance;
 }
 
-.overlay {
+@mixin overlay {
   position: absolute;
-  .bounds(0);
+  @include bounds(0);
 }
 
-.h-box, .v-box {
+@mixin flex-box {
   display: flex;
 
   & > * {
@@ -25,51 +25,53 @@
   }
 }
 
-.h-box {
+@mixin h-box {
+  @include flex-box;
   flex-direction: row;
 }
 
-.v-box {
+@mixin v-box {
+  @include flex-box;
   flex-direction: column;
 }
 
-.flex-control {
+@mixin flex-control {
   width: 0 !important;
 }
 
-.box-center {
+@mixin box-center {
   align-items: center;
   justify-content: center;
 }
 
-.toolbar-btn (@bg) {
-  background: fade(@bg, 80%);
+@mixin toolbar-btn ($bg) {
+  background: fade($bg, 80%);
   color: black;
   transition: background 0.2s;
 
   &:hover {
     color: black;
-    background: @bg;
+    background: $bg;
   }
 }
 
-.space-between-x(@margin) {
-  margin-right: @margin;
+@mixin space-between-x($margin) {
+  margin-right: $margin;
 
   &:last-child {
     margin-right: 0;
   }
 }
 
-.space-between-y(@margin) {
-  margin-bottom: @margin;
+@mixin space-between-y($margin) {
+  margin-bottom: $margin;
 
   &:last-child {
     margin-bottom: 0;
   }
 }
 
-.unselectable {
+@mixin unselectable {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;

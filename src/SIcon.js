@@ -8,10 +8,11 @@ export default {
   },
   render(h, context) {
     return h('i', {
-      'class': {
-        's-icon': true,
-        'material-icons': true,
-      },
+      'class': [
+        's-icon',
+        'material-icons',
+        context.data.staticClass,
+      ],
     }, context.props.icon);
   },
 };

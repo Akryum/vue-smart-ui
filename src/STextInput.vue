@@ -1,9 +1,15 @@
 <template>
   <div class="s-component s-text-input s-interactive s-small-components" :class="componentClass">
     <div class="s-text-input-content">
-      <s-icon v-if="iconLeft" :icon="iconLeft" class="button-icon position-left"></s-icon>
-      <input class="s-text-input-dom-input s-input" :type="type" :placeholder="placeholder" v-model="currentValue" @focus="focus = true" @blur="focus = false"/>
-      <s-icon v-if="iconRight" :icon="iconRight" class="button-icon position-right"></s-icon>
+      <s-icon v-if="iconLeft" :icon="iconLeft" class="s-text-input-icon position-left"></s-icon>
+      <div class="s-input-container">
+        <slot name="before"></slot>
+        <div class="s-text-input-dom-input-container">
+          <input class="s-text-input-dom-input s-input" :type="type" :placeholder="placeholder" v-model="currentValue" @focus="focus = true" @blur="focus = false"/>
+        </div>
+        <slot name="after"></slot>
+      </div>
+      <s-icon v-if="iconRight" :icon="iconRight" class="s-text-input-icon position-right"></s-icon>
     </div>
   </div>
 </template>
@@ -11,7 +17,7 @@
 <script>
 export default {
   props: {
-    value: String,
+    value: {},
     type: {
       type: String,
       default: 'text',
@@ -42,20 +48,32 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import './styles/imports.less';
+<style lang="sass" scoped>
+@import "./styles/imports";
 
 .s-text-input {
   display: inline-block;
   transition: background 0.3s, border 0.3s;
+  vertical-align: middle;
 }
 
 .s-text-input-content {
-  .h-box;
-  .box-center;
+  @include h-box;
+  @include box-center;
+}
+
+.s-input-container {
+  flex: auto 1 1;
+  @include h-box;
+  align-items: center;
+}
+
+.s-text-input-dom-input-container {
+  flex: auto 1 1;
 }
 
 .s-text-input-dom-input {
-  flex: auto 1 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>

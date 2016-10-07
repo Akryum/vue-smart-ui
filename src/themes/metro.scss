@@ -1,0 +1,134 @@
+@import '../styles/include';
+@import '../styles/md-colors';
+
+/* Material design theme */
+
+.theme-metro {
+  
+  @mixin bg-color($color, $bg) {
+    border-color: $color;
+    color: $color;
+    $color-hover: lighten($color, 10%);
+  
+    &:hover {
+      border-color: $color-hover;
+      color: $color-hover;
+    }
+    
+    &:active {
+      border-color: darken($color-hover, 10%);
+      background: $bg;
+      
+      &.has-ripple {
+        border-color: $color;
+        background: white;
+      }
+    }
+    
+    &.flat {
+      border-color: transparent;
+      background: none;
+      
+      &:active {
+        background: $bg;
+        
+        &.has-ripple {
+          background: none;
+        }
+      }
+      
+      &:focus {
+        border-color: $color;
+      }
+    }
+  }
+  
+  a {
+    $color: $md-blue;
+    text-decoration: none;
+    color: $color;
+    
+    &:hover {
+      color: lighten($color, 20%);
+    }
+  }
+  
+  h1 {
+    padding: 0;
+    margin: 12px;
+    font-weight: normal;
+  }
+  
+  &, .s-component, input, textarea {
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell",
+    	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 12pt;
+  }
+
+  .s-button {
+    border: none;
+    padding: 12px;
+    height: 32px;
+    transition: background-color 0.3s, transform 0.3s;
+    
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  .s-action {
+    background: white;
+    font-size: 16px;
+    outline: none;
+    font-weight: 500;
+    border: 2px solid;
+
+    @include bg-color(black, $md-blue);
+
+    &.primary {
+      @include bg-color($md-blue, lighten($md-blue, 50%));
+    }
+
+    &.special {
+      @include bg-color($md-purple-a400, lighten($md-purple-a400, 50%));
+    }
+
+    &.good {
+      @include bg-color($md-green, lighten($md-green, 50%));
+    }
+
+    &.bad {
+      @include bg-color($md-red, lighten($md-red, 50%));
+    }
+
+    &.warning {
+      @include bg-color($md-orange, lighten($md-orange, 50%));
+    }
+  }
+
+  .s-input {
+    border: none;
+    padding: 5px;
+  }
+
+  .s-text-input {
+    background: $md-white;
+    border: solid 2px $md-grey-300;
+
+    .s-text-input-icon {
+      margin: 4px 6px;
+      font-size: 22px !important;
+      transition: color 0.3s;
+    }
+
+    &.focus {
+      $color: $md-blue;
+      border-color: $color;
+      
+      .s-text-input-icon {
+        color: $color;
+      }
+    }
+  }
+
+}

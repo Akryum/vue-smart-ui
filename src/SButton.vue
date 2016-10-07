@@ -1,30 +1,26 @@
 <template>
-  <button class="s-component s-button s-action s-widget s-interactive s-click s-small-components" :class="componentClass" :type="type">
+  <button class="s-component s-button s-action s-widget s-interactive s-click s-small-components" :class="componentClass" :type="type" v-s-ripple="!noRipple">
     <div class="s-button-content">
-      <s-icon v-if="icon" :icon="icon" :class="'button-icon position-' + iconPosition"></s-icon>
+      <s-icon v-if="iconLeft" :icon="iconLeft" class="s-button-icon position-left"></s-icon>
       <slot></slot>
+      <s-icon v-if="iconRight" :icon="iconRight" class="s-button-icon position-right"></s-icon>
     </div>
   </button>
 </template>
 
 <script>
+import ButtonMixin from './mixins/ButtonMixin.js';
 import SIcon from './SIcon';
 
 export default {
   name: 's-button',
+  mixins: [ButtonMixin],
   components: {
     SIcon,
   },
   props: {
-    type: {
-      type: String,
-      default: 'submit',
-    },
-    icon: String,
-    iconPosition: {
-      type: String,
-      default: 'left',
-    },
+    iconLeft: String,
+    iconRight: String,
   },
   computed: {
     componentClass() {
@@ -36,13 +32,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import './styles/imports.less';
+<style lang="sass" scoped>
+@import './styles/imports';
 
 .s-button {
-  font-family: @font-family;
-  border: none;
-  padding: @button-padding @button-padding * 1.5;
   transition: background-color 0.3s;
   position: relative;
   touch-action: manipulation; // IE
@@ -52,28 +45,26 @@ export default {
   display: inline-block;
   height: 28px;
   vertical-align: middle;
+  @include unselectable;
 
   .s-button-content {
-    .h-box;
-    .box-center;
+    @include h-box;
+    @include box-center;
     height: 100%;
   }
 
-  background-color: #ccc;
-
-  &:hover {
-    background-color: #ddd;
-  }
-
-  &:active {
-    background-color: #bbb;
-  }
-
-  .s-icon {
-    margin-right: 4px;
-    margin-left: -2px;
+  .s-button-icon {
     font-size: 16px !important;
-    margin-top: 2px;
+    
+    &.position-left {
+      margin-right: 4px;
+      margin-left: -2px;
+    }
+    
+    &.position-right {
+      margin-left: 4px;
+      margin-right: -2px;
+    }
   }
 
   &.empty {

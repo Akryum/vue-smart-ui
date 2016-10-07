@@ -7,10 +7,10 @@
     </div>
     <div class="buttons">
       <div class="previous-btn">
-        <s-icon-button color="primary" icon="&#xE5C4;" :tooltip="previousToolip" @click="activatePreviousItem"></s-icon-button>
+        <s-icon-button :class="buttonClass" icon="arrow_back" :tooltip="previousToolip" @click.native="activatePreviousItem"></s-icon-button>
       </div>
       <div class="next-btn">
-        <s-icon-button color="primary" icon="&#xE5C8;" :tooltip="nextToolip" @click="activateNextItem"></s-icon-button>
+        <s-icon-button :class="buttonClass" icon="arrow_forward" :tooltip="nextToolip" @click.native="activateNextItem"></s-icon-button>
       </div>
     </div>
   </div>
@@ -27,23 +27,31 @@ export default {
       type: String,
       default: 'Suivant',
     },
-    index: {
-      type: Number,
+    value: {
       default: 0,
     },
     displayCount: {
-      type: Number,
       default: 1,
+    },
+    buttonClass: {
+      default: '',
     },
   },
   data() {
     return {
       slides: [],
       slideWidth: 0,
+      index: 0,
     };
   },
   watch: {
     slides() {
+      this.updateSlideWidth();
+    },
+    value(val) {
+      this.changeIndex(val, false);
+    },
+    displayCount(val) {
       this.updateSlideWidth();
     },
   },
@@ -64,13 +72,16 @@ export default {
     activatePreviousItem() {
       this.changeIndex(this.index - 1);
     },
-    changeIndex(val) {
+    changeIndex(val, dispatch = true) {
       if (val > this.indexMax) {
         val = 0;
       } else if (val < 0) {
         val = this.indexMax;
       }
       this.index = val;
+      if(dispatch) {
+        this.$emit('input', this.index);
+      }
       this.updateSlideWidth();
     },
     updateSlideWidth() {
@@ -82,7 +93,7 @@ export default {
       }
     },
   },
-  ready() {
+  mounted() {
     this.updateSlideWidth();
     window.addEventListener('resize', this.updateSlideWidth);
   },
@@ -92,9 +103,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "~style/vars.less";
-@import "~style/mixins.less";
+<style lang="sass" scoped>
+@import './styles/imports';
 
 .carousel {
   height: 200px;
@@ -112,7 +122,7 @@ export default {
       position: absolute;
       top: 0;
       bottom: 0;
-      .h-box;
+      @include h-box;
       transition: left 0.3s;
     }
   }
@@ -121,8 +131,8 @@ export default {
     position: absolute;
     top: 0;
     bottom: 0;
-    .v-box;
-    .box-center;
+    @include v-box;
+    @include box-center;
   }
 
   .previous-btn {

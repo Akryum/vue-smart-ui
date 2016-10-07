@@ -8,9 +8,9 @@
 
 <script>
 export default {
-  props: {
-    width: Number,
-  },
+  data: () => ({
+    width: 100,
+  }),
   computed: {
     style() {
       return {
@@ -30,8 +30,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "~style/mixins.less";
+<style lang="sass" scoped>
+@import './styles/imports';
 
 .carousel-slide {
   flex: auto 0 0;
@@ -39,7 +39,7 @@ export default {
 
   .content {
     overflow: hidden;
-    .overlay;
+    @include overlay;
   }
 }
 </style>
