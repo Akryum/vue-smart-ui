@@ -44,6 +44,7 @@ export default {
   border-radius: 3px;
   font-family: 'Roboto Mono', monospace;
   font-size: 10pt;
+  overflow: auto;
   
   .line-numbers, .render {
     padding: 4px;

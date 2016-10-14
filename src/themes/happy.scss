@@ -1,4 +1,5 @@
 @import '../styles/include';
+@import '../styles/imports';
 @import '../styles/md-colors';
 
 .theme-happy {
@@ -22,6 +23,7 @@
     &.flat {
       background-color: transparent;
       color: $flat-color;
+      border-color: transparent;
       $bg-hover: lighten($flat-color, 10%);
       
       &:hover {
@@ -29,7 +31,7 @@
       }
       
       &:active {
-        background-color: rgba($bg-hover, 0.2);
+        background-color: rgba($bg-hover, .2);
         color: darken($bg-hover, 10%);
         
         &.has-ripple {
@@ -62,24 +64,30 @@
   }
 
   &, .s-component, input, textarea {
-    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell",
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell",
     	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 12pt;
   }
+  
+  /** Button **/
 
   .s-button {
     border-radius: $br;
     padding: 12px;
     height: 32px;
+    
+    .s-ripple {
+      border-radius: 0;
+    }
   }
 
   .s-action {
     font-size: 16px;
     outline: none;
-    border: solid 2px transparent;
+    border: solid 2px rgba(black, .05);
 
     &:focus {
-      border-color: rgba(black, 0.2);
+      border-color: rgba(black, .5);
     }
 
     @include bg-color($md-grey-300, black, black);
@@ -104,21 +112,31 @@
       @include bg-color($md-orange, white);
     }
   }
+  
+  /** Text input **/
 
   .s-input {
     border: none;
-    padding: 5px;
+    padding: 5px 9px;
   }
 
   .s-text-input {
     background: $md-grey-100;
-    border: solid 2px $md-grey-300;
+    border: solid 2px $md-grey-400;
     border-radius: $br;
 
     .s-text-input-icon {
-      margin: 4px 6px;
+      margin: 0 4px;
       font-size: 22px !important;
-      transition: color 0.3s;
+      transition: color .3s;
+      
+      &.position-left {
+        margin-right: -4px;
+      }
+      
+      &.position-right {
+        margin-left: -4px;
+      }
     }
 
     &.focus {
@@ -128,6 +146,306 @@
       
       .s-text-input-icon {
         color: $color;
+      }
+    }
+  }
+  
+  /** Checkbox **/
+  
+  .s-checkbox {
+    position: relative;
+    
+    .s-dom-checkbox {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .content {
+      transition: background-color .2s;
+    }
+    
+    .check-mark {
+      $size: 20px;
+      $mark-border: solid 2px white;
+      
+      width: $size;
+      height: $size;
+      border: solid 2px;
+      border-radius: $br;
+      background: $md-blue;
+      box-sizing: border-box;
+      position: relative;
+      transition: border-color .3s .4s;
+      
+      &:before {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: block;
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: white;
+        transition: transform .2s .2s;
+      }
+      
+      &:after {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0px;
+        bottom: 3px;
+        display: block;
+        content: "";
+        width: 6px;
+        height: 13px;
+        transform-origin: bottom right;
+        transform: rotate(45deg) scale(0);
+        opacity: 0;
+        transition: opacity .2s ease, transform .2s ease;
+        transition-delay: .1s;
+        box-sizing: border-box;
+        border: {
+          right: $mark-border;
+          bottom: $mark-border;
+        };
+      }
+    }
+    
+    &:not(.selected) {
+      .check-mark {
+        border-color: $md-grey-400;
+        animation: check-mark-bounce .3s linear;
+      }
+    }
+    
+    &.selected {
+      .check-mark {
+        transition: border-color .1s;
+        border-color: $md-grey-600;
+        animation: check-mark-bounce2 .3s linear;
+        
+        &:before {
+          transition: transform .2s;
+          transform: scale(0);
+        }
+        
+        &:after {
+          transition: opacity .2s .2s ease, transform .2s .2s ease;
+          transform: rotate(45deg) scale(1);
+          opacity: 1;
+        }
+      }
+    }
+    
+    &:active {
+      .content {
+        background-color: rgba($md-blue, .1);
+      }
+    }
+    
+    &:active, &.focus {
+      color: $md-blue;
+    }
+    
+    @keyframes check-mark-bounce {
+      50% {
+        transform: scale(.9);
+      }
+    }
+    
+    @keyframes check-mark-bounce2 {
+      50% {
+        transform: scale(.9);
+      }
+    }
+  }
+  
+  /** Switch **/
+  
+  .s-switch {
+    position: relative;
+    
+    .s-dom-checkbox {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .check-mark {
+      width: 40px;
+      height: 20px;
+      border-radius: 12px;
+      transition: background .15s, border .15s;
+      position: relative;
+      
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 0;
+        margin: -2px;
+        background: white;
+        border-radius: 50%;
+        transition: left .15s, border .15s;
+      }
+    }
+    
+    &:not(.selected) {
+      .check-mark {
+        background: $md-grey-300;
+        
+        &:after {
+          left: 0;
+        }
+        
+        &, &:after {
+          border: solid 2px $md-grey-400;
+        }
+      }
+    }
+    
+    &.selected {
+      .check-mark {
+        background: $md-blue;
+        
+        &:after {
+          left: 20px;
+        }
+        
+        &, &:after {
+          border: solid 2px $md-grey-600;
+        }
+      }
+    }
+    
+    &:active {
+      .content {
+        background-color: rgba($md-blue, .1);
+      }
+    }
+    
+    &:active, &.focus {
+      color: $md-blue;
+    }
+  }
+  
+  /** Tabs **/
+  
+  .s-tabs {
+    $border-color: $md-grey-400;
+    
+    .tab-items {
+      background: $md-grey-200;
+      border-bottom: solid 2px $border-color;
+    }
+    
+    .tab-item {
+      border: {
+        $b: solid 2px transparent;
+        left: $b;
+        right: $b;
+        top: $b;
+        // top: solid 2px transparent;
+      };
+      border-radius: $br $br 0 0;
+      transition: border-color .15s, background .15s;
+      position: relative;
+      outline: none;
+        
+      .s-ripple {
+        border-radius: 0;
+        bottom: -2px;
+        z-index: 1;
+      }
+      
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        height: 2px;
+        background: white;
+        transition: opacity .15s;
+        opacity: 0;
+      }
+      
+      &:not(.active) {
+        color: $md-grey-600;
+        &:after {
+          border: {
+            left: none !important;
+            right: none !important;
+          }
+        }
+      }
+      
+      &.active {
+        border-color: $border-color;
+        // border-top-color: $md-blue;
+        background: white;
+        
+        &:after {
+          opacity: 1;
+          border: {
+            $b: solid 2px $border-color;
+            left: $b;
+            right: $b;
+          };
+        }
+      }
+      
+      &:focus {
+        border-color: $md-blue;
+        
+        &:after {
+          border: {
+            $b: solid 2px $md-blue;
+            left: $b;
+            right: $b;
+          };
+        }
+      }
+    }
+  }
+  
+  /** Carousel **/
+  
+  .s-carousel {
+    .dots {
+      height: 14px;
+    }
+    
+    .dot {
+      width: 14px;
+      text-align: center;
+      line-height: 0;
+      
+      span {
+        display: none;
+      }
+      
+      div {
+        display: inline-block;
+        background: white;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        transition: width .15s linear, height .15s linear, background .3s, border .3s;
+        background: rgba(white, .7);
+        border: solid 2px rgba(black, .5);
+      }
+      
+      &.active {
+        div {
+          width: 8px;
+          height: 8px;
+          background: white;
+          border: solid 2px rgba(black, .5);
+        }
       }
     }
   }

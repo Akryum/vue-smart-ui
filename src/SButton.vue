@@ -9,12 +9,14 @@
 </template>
 
 <script>
-import ButtonMixin from './mixins/ButtonMixin.js';
+import ComponentMixin from './mixins/ComponentMixin';
+import ButtonMixin from './mixins/ButtonMixin';
+import RippleMixin from './mixins/RippleMixin';
 import SIcon from './SIcon';
 
 export default {
   name: 's-button',
-  mixins: [ButtonMixin],
+  mixins: [ComponentMixin, ButtonMixin, RippleMixin],
   components: {
     SIcon,
   },

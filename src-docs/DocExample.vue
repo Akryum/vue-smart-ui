@@ -59,10 +59,13 @@ export default {
 
 .doc-example {
   margin: 12px;
+  border-top: solid 1px #eee;
+  padding-top: 8px;
 }
 
 .header {
   @include h-box;
+  margin-bottom: 6px;
 }
 
 .label {
@@ -83,10 +86,12 @@ export default {
     
   }
   
-  .code {
-    overflow: auto;
-    max-height: 400px;
+  .code, .code-editor {
     margin-left: 4px;
+  }
+  
+  .code {
+    max-height: 400px;
   }
   
   .code-editor {
@@ -95,6 +100,18 @@ export default {
       min-height: 100px;
       resize: vertical;
     }
+  }
+}
+
+@media(max-width: 800px) {
+  .panes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .code, .code-editor {
+    margin-left: 0;
+    margin-top: 10px;
   }
 }
 </style>

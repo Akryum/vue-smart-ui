@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel">
+  <div class="s-carousel">
     <div class="content">
       <div class="slides" :style="slidesStyle">
         <slot></slot>
@@ -13,11 +13,20 @@
         <s-icon-button :class="buttonClass" icon="arrow_forward" :tooltip="nextToolip" @click.native="activateNextItem"></s-icon-button>
       </div>
     </div>
+    <div class="dots">
+      <div class="dot" v-for="(s, i) in slides" :class="{active: (i >= index && i < index + parseInt(displayCount))}" @click="showIndex(i)">
+        <div><span>{{ i+1 }}</span></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import ComponentMixin from './mixins/ComponentMixin';
+
 export default {
+  name: 's-carousel',
+  mixins: [ComponentMixin],
   props: {
     previousToolip: {
       type: String,
@@ -41,7 +50,7 @@ export default {
     return {
       slides: [],
       slideWidth: 0,
-      index: 0,
+      index: parseInt(this.value),
     };
   },
   watch: {
@@ -49,7 +58,7 @@ export default {
       this.updateSlideWidth();
     },
     value(val) {
-      this.changeIndex(val, false);
+      this.changeIndex(parseInt(val), false);
     },
     displayCount(val) {
       this.updateSlideWidth();
@@ -71,6 +80,15 @@ export default {
     },
     activatePreviousItem() {
       this.changeIndex(this.index - 1);
+    },
+    showIndex(i) {
+      if(i >= this.index && i < this.index + parseInt(this.displayCount)) {
+        return;
+      }
+      if (i > this.indexMax) {
+        i = this.indexMax;
+      }
+      this.changeIndex(i);
     },
     changeIndex(val, dispatch = true) {
       if (val > this.indexMax) {
@@ -106,7 +124,7 @@ export default {
 <style lang="sass" scoped>
 @import './styles/imports';
 
-.carousel {
+.s-carousel {
   height: 200px;
   position: relative;
 
@@ -141,6 +159,29 @@ export default {
 
   .next-btn {
     right: -20px;
+  }
+  
+  .dots {
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    @include unselectable;
+    @include h-box;
+    @include box-center;
+    
+    .dot {
+      display: inline-block;
+      font-size: 10px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      cursor: default;
+      
+      &.active {
+        color: white;
+      }
+    }
   }
 }
 </style>

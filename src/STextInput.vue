@@ -15,7 +15,11 @@
 </template>
 
 <script>
+import ComponentMixin from './mixins/ComponentMixin';
+
 export default {
+  name: 's-text-input',
+  mixins: [ComponentMixin],
   props: {
     value: {},
     type: {

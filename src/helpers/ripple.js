@@ -54,6 +54,9 @@ function startRipple(eventType, event) {
       (rect.width * rect.width) + (rect.height * rect.height)
     );
   }
+  if (max > 150) {
+    max = 150;
+  }
   var dim = (max * 2) + 'px';
   ripple.style.width = dim;
   ripple.style.height = dim;

@@ -1,6 +1,6 @@
 <template>
   <div class="docs docs-button">
-    <doc-page title="Buttons" :snippet="snippet_basic">
+    <doc-page title="Button" :snippet="snippet_basic">
       <doc-example v-for="demo in demos" :label="demo.label" v-model="demo.code" :data-hook="demo.data" lang="html"></doc-example>
     </doc-page>
   </div>

@@ -1,9 +1,12 @@
 @import '../styles/include';
+@import '../styles/imports';
 @import '../styles/md-colors';
 
 /* Material design theme */
 
 .theme-material {
+  
+  $br: 2px;
   
   @mixin bg-color($bg, $color, $flat-color: $bg) {
     background-color: $bg;
@@ -63,10 +66,13 @@
     	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 12pt;
   }
+  
+  
+  /** Button **/
 
   .s-button {
     border: none;
-    border-radius: 2px;
+    border-radius: $br;
     padding: 12px;
     height: 32px;
     
@@ -103,6 +109,8 @@
       @include bg-color($md-orange, white);
     }
   }
+  
+  /** Text Input **/
   
   .s-input {
     border: none;
@@ -153,5 +161,237 @@
       }
     }
   }
-
+  
+  /** Checkbox **/
+  
+  .s-checkbox {
+    position: relative;
+    
+    .s-dom-checkbox {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .content {
+      transition: background-color .2s;
+    }
+    
+    .check-mark {
+      $size: 20px;
+      $mark-border: solid 2px white;
+      
+      width: $size;
+      height: $size;
+      border: solid 2px;
+      border-radius: $br;
+      background: $md-blue;
+      box-sizing: border-box;
+      position: relative;
+      transition: border-color .3s .4s;
+      
+      &:before {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: block;
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: white;
+        transition: transform .2s .2s;
+      }
+      
+      &:after {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0px;
+        bottom: 3px;
+        display: block;
+        content: "";
+        width: 6px;
+        height: 13px;
+        transform-origin: bottom right;
+        transform: rotate(45deg) scale(0);
+        opacity: 0;
+        transition: opacity .2s ease, transform .2s ease;
+        transition-delay: .1s;
+        box-sizing: border-box;
+        border: {
+          right: $mark-border;
+          bottom: $mark-border;
+        };
+      }
+    }
+    
+    &:not(.selected) {
+      .check-mark {
+        border-color: $md-grey-400;
+        animation: check-mark-bounce .3s linear;
+      }
+    }
+    
+    &.selected {
+      .check-mark {
+        transition: border-color .1s;
+        border-color: $md-blue;
+        animation: check-mark-bounce2 .3s linear;
+        
+        &:before {
+          transition: transform .2s;
+          transform: scale(0);
+        }
+        
+        &:after {
+          transition: opacity .2s .2s ease, transform .2s .2s ease;
+          transform: rotate(45deg) scale(1);
+          opacity: 1;
+        }
+      }
+    }
+    
+    &:active {
+      .content {
+        background-color: rgba($md-blue, .1);
+      }
+    }
+    
+    &:active, &.focus {
+      color: $md-blue;
+    }
+    
+    @keyframes check-mark-bounce {
+      50% {
+        transform: scale(.9);
+      }
+    }
+    
+    @keyframes check-mark-bounce2 {
+      50% {
+        transform: scale(.9);
+      }
+    }
+  }
+  
+  /** Switch **/
+  
+  .s-switch {
+    position: relative;
+    
+    .s-dom-checkbox {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .check-mark {
+      width: 34px;
+      height: 14px;
+      border-radius: 8px;
+      transition: background .15s, border .15s;
+      position: relative;
+      
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(black, .4);
+        transition: left .15s, background .15s;
+      }
+    }
+    
+    &:not(.selected) {
+      .check-mark {
+        background: $md-grey-300;
+        
+        &:after {
+          left: 0;
+        }
+      }
+    }
+    
+    &.selected {
+      .check-mark {
+        background: $md-blue-200;
+        
+        &:after {
+          left: 14px;
+          background: $md-blue;
+        }
+      }
+    }
+    
+    &:active {
+      .content {
+        background-color: rgba($md-blue, .1);
+      }
+    }
+    
+    &:active, &.focus {
+      color: $md-blue;
+    }
+  }
+  
+  /** Tabs **/
+  
+  .s-tabs {
+    .tab-items {
+      background: $md-grey-200;
+    }
+    
+    .tab-item {
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 500;
+      border-bottom: solid 2px transparent;
+      transition: border-bottom-color .3s;
+      outline: none;
+      
+      &.active {
+        color: $md-blue;
+        border-bottom-color: $md-blue;
+      }
+    }
+  }
+  
+  /** Carousel **/
+  
+  .s-carousel {
+    .dots {
+      height: 14px;
+    }
+    
+    .dot {
+      width: 14px;
+      text-align: center;
+      line-height: 0;
+      
+      span {
+        display: none;
+      }
+      
+      div {
+        display: inline-block;
+        background: white;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        transition: width .15s linear, height .15s linear, background .3s linear;
+        background: rgba(white, .7);
+        box-shadow: 0 1px 3px rgba(black, .4);
+      }
+      
+      &.active {
+        div {
+          width: 8px;
+          height: 8px;
+          background: white;
+        }
+      }
+    }
+  }
 }

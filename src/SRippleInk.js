@@ -23,7 +23,6 @@ function removeBindingsFromElement(element) {
 }
 
 function updateBindings(el, { value }) {
-  console.log(value);
   if(value || typeof value === 'undefined') {
     addBindingsToElement(el);
   } else {

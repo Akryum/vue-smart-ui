@@ -3,12 +3,14 @@
     <app-menu></app-menu>
     <div class="app-content">
       <div class="app-toolbar">
+        <div class="spacer"></div>
         <span>
           Theme:
           <select v-model="currentTheme">
             <option v-for="theme in themes">{{theme}}</option>
           </select>
         </span>
+        <s-switch v-model="rippleEnabled">Ripple</s-switch>
       </div>
       <div class="content">
         <router-view></router-view>
@@ -18,6 +20,7 @@
 </template>
 
 <script>
+import SmartUi from 'vue-smart-ui';
 import AppMenu from './AppMenu.vue';
 
 export default {
@@ -41,6 +44,14 @@ export default {
   computed: {
     appClasses() {
       return [`theme-${this.currentTheme}`];
+    },
+    rippleEnabled: {
+      get() {
+        return SmartUi.bus.ripple;
+      },
+      set(val) {
+        SmartUi.bus.ripple = val;
+      },
     },
   },
 };
@@ -75,5 +86,15 @@ a {
 .app-toolbar {
   padding: 12px;
   border-bottom: solid 1px $md-grey-300;
+  @include h-box;
+  align-items: center;
+  
+  & > * {
+    @include space-between-x(10px);
+  }
+  
+  .spacer {
+    flex: 100% 1 1;
+  }
 }
 </style>

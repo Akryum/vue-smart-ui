@@ -1,4 +1,5 @@
 @import '../styles/include';
+@import '../styles/imports';
 @import '../styles/md-colors';
 
 /* Material design theme */
@@ -60,7 +61,7 @@
   }
   
   &, .s-component, input, textarea {
-    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell",
+    font-family: 'Segoe UI', 'Open Sans', -apple-system, BlinkMacSystemFont, "Oxygen", "Ubuntu", "Cantarell",
     	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 12pt;
   }
@@ -113,7 +114,7 @@
 
   .s-text-input {
     background: $md-white;
-    border: solid 2px $md-grey-300;
+    border: solid 2px $md-black;
 
     .s-text-input-icon {
       margin: 4px 6px;
@@ -130,5 +131,204 @@
       }
     }
   }
-
+  
+  /** Checkbox **/
+  
+  .s-checkbox {
+    position: relative;
+    
+    .s-dom-checkbox {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .content {
+      transition: background-color .2s;
+    }
+    
+    .check-mark {
+      $size: 20px;
+      $mark-border: solid 2px white;
+      
+      width: $size;
+      height: $size;
+      border: solid 2px;
+      background: $md-blue;
+      box-sizing: border-box;
+      position: relative;
+      transition: border-color .3s .4s;
+      
+      &:before {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: block;
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: white;
+        transition: transform .2s .2s;
+      }
+      
+      &:after {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0px;
+        bottom: 3px;
+        display: block;
+        content: "";
+        width: 6px;
+        height: 13px;
+        transform-origin: bottom right;
+        transform: rotate(45deg) scale(0);
+        opacity: 0;
+        transition: opacity .2s ease, transform .2s ease;
+        transition-delay: .1s;
+        box-sizing: border-box;
+        border: {
+          right: $mark-border;
+          bottom: $mark-border;
+        };
+      }
+    }
+    
+    &:not(.selected) {
+      .check-mark {
+        border-color: $md-black;
+        animation: check-mark-bounce .3s linear;
+      }
+    }
+    
+    &.selected {
+      .check-mark {
+        transition: border-color .1s;
+        border-color: $md-blue;
+        animation: check-mark-bounce2 .3s linear;
+        
+        &:before {
+          transition: transform .2s;
+          transform: scale(0);
+        }
+        
+        &:after {
+          transition: opacity .2s .2s ease, transform .2s .2s ease;
+          transform: rotate(45deg) scale(1);
+          opacity: 1;
+        }
+      }
+    }
+    
+    &:active {
+      .content {
+        background-color: rgba(black, .1);
+      }
+    }
+    
+    &:active, &.focus {
+      color: $md-blue;
+    }
+    
+    @keyframes check-mark-bounce {
+      50% {
+        transform: scale(.9);
+      }
+    }
+    
+    @keyframes check-mark-bounce2 {
+      50% {
+        transform: scale(.9);
+      }
+    }
+  }
+  
+  /** Switch **/
+  
+  .s-switch {
+    position: relative;
+    
+    .s-dom-checkbox {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .check-mark {
+      width: 40px;
+      height: 16px;
+      border-radius: 10px;
+      transition: background .15s, border .15s;
+      position: relative;
+      border: solid 2px $md-black;
+      
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 5px;
+        margin: -2px;
+        border-radius: 50%;
+        transition: left .15s, background .15s;
+      }
+    }
+    
+    &:not(.selected) {
+      .check-mark {
+        &:after {
+          left: 6px;
+          background: black;
+        }
+      }
+    }
+    
+    &.selected {
+      .check-mark {
+        border-color: $md-blue;
+        background: $md-blue;
+        
+        &:after {
+          left: 28px;
+          background: white;
+        }
+      }
+    }
+    
+    &:active {
+      .content {
+        background-color: rgba($md-blue, .1);
+      }
+    }
+    
+    &:active, &.focus {
+      color: $md-blue;
+    }
+  }
+  
+  /** Tabs **/
+  
+  .s-tabs {
+    .tab-items {
+      background: $md-grey-200;
+      padding: 4px 4px 0 4px;
+    }
+    
+    .tab-item {
+      transition: background .15s;
+      position: relative;
+      outline: none;
+      
+      &:not(.active) {
+        color: $md-grey-700;
+      }
+      
+      &.active {
+        background: white;
+      }
+      
+      &:focus {
+        color: $md-blue;
+      }
+    }
+  }
 }

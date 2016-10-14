@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-slide" :style="style">
+  <div class="s-carousel-slide" :style="style">
     <div class="content">
       <slot></slot>
     </div>
@@ -7,7 +7,11 @@
 </template>
 
 <script>
+import ComponentMixin from './mixins/ComponentMixin';
+
 export default {
+  name: 's-carousel-slide',
+  mixins: [ComponentMixin],
   data: () => ({
     width: 100,
   }),
@@ -33,7 +37,7 @@ export default {
 <style lang="sass" scoped>
 @import './styles/imports';
 
-.carousel-slide {
+.s-carousel-slide {
   flex: auto 0 0;
   position: relative;
 

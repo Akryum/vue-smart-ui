@@ -7,11 +7,13 @@
 </template>
 
 <script>
+import ComponentMixin from './mixins/ComponentMixin';
 import ButtonMixin from './mixins/ButtonMixin.js';
+import RippleMixin from './mixins/RippleMixin';
 
 export default {
   name: 's-icon-button',
-  mixins: [ButtonMixin],
+  mixins: [ComponentMixin, ButtonMixin, RippleMixin],
   props: {
     icon: {
       type: String,
